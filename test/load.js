@@ -72,21 +72,11 @@ exports['Load module function'] = function (test) {
 };
 
 exports['Install from npm and Load module'] = function (test) {
-    var directory = path.join(__dirname, '..', 'node_modules', 'runit-npmtest');
-    
-    if (fs.existsSync(directory)) {
-        fs.unlinkSync(path.join(directory, 'package.json'));
-        fs.unlinkSync(path.join(directory, 'index.js'));
-        fs.unlinkSync(path.join(directory, 'setglobal.js'));
-        fs.rmdirSync(directory);
-    }
-    
-    Object.keys(require.cache).forEach(function (name) {
-        delete require.cache[name];
-    });
+    removeModule('npmtest');
     
     test.expect(4);
     
+    var directory = getModuleDirectory('npmtest');
     test.ok(!fs.existsSync(directory));
     
     runit.load('npmtest', 'setglobal', function(err, result) {
@@ -99,7 +89,24 @@ exports['Install from npm and Load module'] = function (test) {
 };
 
 exports['Install from npm and Load module function'] = function (test) {
-    var directory = path.join(__dirname, '..', 'node_modules', 'runit-npmtest');
+    removeModule('npmtest');
+    
+    test.expect(4);
+    
+    var directory = getModuleDirectory('npmtest');
+    test.ok(!fs.existsSync(directory));
+    
+    runit.load('npmtest', 'setrunit', function(err, result) {
+        test.equal(err, null);
+        test.ok(result);
+        var npmtest = require('runit-npmtest');
+        test.equal(result, npmtest.setrunit);
+        test.done();
+    });
+};
+
+function removeModule(name) {
+    var directory = getModuleDirectory(name);
     
     if (fs.existsSync(directory)) {
         fs.unlinkSync(path.join(directory, 'package.json'));
@@ -111,16 +118,8 @@ exports['Install from npm and Load module function'] = function (test) {
     Object.keys(require.cache).forEach(function (name) {
         delete require.cache[name];
     });
-    
-    test.expect(4);
-    
-    test.ok(!fs.existsSync(directory));
-    
-    runit.load('npmtest', 'setrunit', function(err, result) {
-        test.equal(err, null);
-        test.ok(result);
-        var npmtest = require('runit-npmtest');
-        test.equal(result, npmtest.setrunit);
-        test.done();
-    });
-};
+}
+
+function getModuleDirectory(name) {
+    return path.join(__dirname, '..', 'node_modules', 'runit-' + name);
+}
