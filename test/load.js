@@ -7,3 +7,12 @@ exports['Load function defined'] = function (test) {
     test.done();
 };
 
+exports['Load local runit module'] = function (test) {
+    var setglobal = require('../runit/test/setglobal.js');
+    var result = runit.load('test','setglobal');
+
+    test.ok(result);
+    test.equal(result, setglobal);
+    test.done();
+};
+
