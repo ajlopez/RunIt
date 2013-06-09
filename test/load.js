@@ -45,35 +45,37 @@ exports['Load test directory runit module'] = function (test) {
 };
 
 exports['Load module'] = function (test) {
-    var setglobal = require('runit-npmtest/setglobal');
     var result = runit.load('npmtest', 'setglobal');
 
     test.ok(result);
+    var setglobal = require('runit-npmtest/setglobal');    
     test.equal(result, setglobal);
     test.done();
 };
 
 exports['Install from npm and Load module'] = function (test) {
     var directory = path.join(__dirname, '..', 'node_modules', 'runit-npmtest');
+    
     if (fs.existsSync(directory)) {
         fs.unlinkSync(path.join(directory, 'package.json'));
         fs.unlinkSync(path.join(directory, 'index.js'));
         fs.unlinkSync(path.join(directory, 'setglobal.js'));
         fs.rmdirSync(directory);
     }
+    
+    Object.keys(require.cache).forEach(function (name) {
+        delete require.cache[name];
+    });
+    
+    test.expect(4);
+    
     test.ok(!fs.existsSync(directory));
     
-    test.expect(3);
-    
-    var result = runit.load('npmtest', 'setglobal', function(err, result) {
+    runit.load('npmtest', 'setglobal', function(err, result) {
         test.equal(err, null);
         test.ok(result);
         var setglobal = require('runit-npmtest/setglobal');
         test.equal(result, setglobal);
         test.done();
     });
-
-    test.ok(result);
-    test.equal(result, setglobal);
-    test.done();
 };
