@@ -19,7 +19,7 @@ exports['Load local runit module file'] = function (test) {
 
 exports['Load local runit module function'] = function (test) {
     var setrunit = require('../runit/test/index.js').setrunit;
-    var result = runit.load('test','setrunit');
+    var result = runit.load('test', 'setrunit');
 
     test.ok(result);
     test.equal(result, setrunit);
@@ -36,7 +36,16 @@ exports['Load unknown module fails'] = function (test) {
 
 exports['Load test directory runit module'] = function (test) {
     var setglobal = require(path.join(__dirname, 'runit', 'localtest', 'setglobal.js'));
-    var result = runit.load('localtest','setglobal', { directory: __dirname });
+    var result = runit.load('localtest', 'setglobal', { directory: __dirname });
+
+    test.ok(result);
+    test.equal(result, setglobal);
+    test.done();
+};
+
+exports['Load module'] = function (test) {
+    var setglobal = require('runit-npmtest/setglobal');
+    var result = runit.load('npmtest', 'setglobal');
 
     test.ok(result);
     test.equal(result, setglobal);
