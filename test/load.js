@@ -44,12 +44,30 @@ exports['Load test directory runit module'] = function (test) {
     test.done();
 };
 
+exports['Load test directory runit module function'] = function (test) {
+    var localtest = require(path.join(__dirname, 'runit', 'localtest'));
+    var result = runit.load('localtest', 'setrunit', { directory: __dirname });
+
+    test.ok(result);
+    test.equal(result, localtest.setrunit);
+    test.done();
+};
+
 exports['Load module'] = function (test) {
     var result = runit.load('npmtest', 'setglobal');
 
     test.ok(result);
     var setglobal = require('runit-npmtest/setglobal');    
     test.equal(result, setglobal);
+    test.done();
+};
+
+exports['Load module function'] = function (test) {
+    var result = runit.load('npmtest', 'setrunit');
+
+    test.ok(result);
+    var npmtest = require('runit-npmtest');    
+    test.equal(result, npmtest.setrunit);
     test.done();
 };
 
@@ -76,6 +94,33 @@ exports['Install from npm and Load module'] = function (test) {
         test.ok(result);
         var setglobal = require('runit-npmtest/setglobal');
         test.equal(result, setglobal);
+        test.done();
+    });
+};
+
+exports['Install from npm and Load module function'] = function (test) {
+    var directory = path.join(__dirname, '..', 'node_modules', 'runit-npmtest');
+    
+    if (fs.existsSync(directory)) {
+        fs.unlinkSync(path.join(directory, 'package.json'));
+        fs.unlinkSync(path.join(directory, 'index.js'));
+        fs.unlinkSync(path.join(directory, 'setglobal.js'));
+        fs.rmdirSync(directory);
+    }
+    
+    Object.keys(require.cache).forEach(function (name) {
+        delete require.cache[name];
+    });
+    
+    test.expect(4);
+    
+    test.ok(!fs.existsSync(directory));
+    
+    runit.load('npmtest', 'setrunit', function(err, result) {
+        test.equal(err, null);
+        test.ok(result);
+        var npmtest = require('runit-npmtest');
+        test.equal(result, npmtest.setrunit);
         test.done();
     });
 };
