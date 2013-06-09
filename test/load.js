@@ -2,6 +2,6 @@
 var runit = require('..'),
     assert = require('assert');
     
-assert.ok(runit.run);
-assert.equal(typeof runit.run, "function");
+assert.ok(runit.load);
+assert.equal(typeof runit.load, "function");
 
