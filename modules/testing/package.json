@@ -1,0 +1,15 @@
+{ "name": "runit-testing"
+, "description": "Runit testing module"
+, "keywords": [ "plugin", "run", "engine" ]
+, "version": "0.0.1alpha"
+, "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
+, "repository": { "type": "git", "url": "git://github.com/ajlopez/RunIt.git" }
+, "main": "./index.js"
+, "engines": { "node": ">= 0.6.0 && < 0.11.0" }
+, "scripts": {
+  }
+, "dependencies": {
+  }
+, "devDependencies": {
+  }
+}
