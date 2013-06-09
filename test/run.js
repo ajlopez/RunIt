@@ -16,3 +16,13 @@ exports['Run local runit test setglobal'] = function (test) {
     test.equal(global.model.name, 'Adam');
     test.done();
 };
+
+exports['Run local runit test setrunit'] = function (test) {
+    runit.model = { };
+    
+    runit.run('test', 'setrunit', ['name', 'Adam']);
+    
+    test.ok(runit.model.name);
+    test.equal(runit.model.name, 'Adam');
+    test.done();
+};
