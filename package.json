@@ -7,10 +7,11 @@
 , "main": "./lib/runit.js"
 , "engines": { "node": ">= 0.6.0 && < 0.11.0" }
 , "scripts": {
-    "test": "node ./test.js"
+    "test": "nodeunit test"
   }
 , "dependencies": {
   }
 , "devDependencies": {
+    "nodeunit": ">= 0.7.4"
   }
 }

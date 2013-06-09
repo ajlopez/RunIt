@@ -1,7 +1,9 @@
 
-var runit = require('..'),
-    assert = require('assert');
+var runit = require('..');
     
-assert.ok(runit.load);
-assert.equal(typeof runit.load, "function");
+exports['Load function defined'] = function (test) {
+    test.ok(runit.load);
+    test.equal(typeof runit.load, "function");
+    test.done();
+};
 
