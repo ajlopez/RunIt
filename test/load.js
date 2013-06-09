@@ -55,13 +55,15 @@ exports['Load module'] = function (test) {
 
 exports['Install from npm and Load module'] = function (test) {
     var directory = path.join(__dirname, '..', 'node_modules', 'runit-npmtest');
-    fs.unlinkSync(path.join(directory, 'package.json'));
-    fs.unlinkSync(path.join(directory, 'index.js'));
-    fs.unlinkSync(path.join(directory, 'setglobal.js'));
-    fs.rmdirSync(directory);
+    if (fs.existsSync(directory)) {
+        fs.unlinkSync(path.join(directory, 'package.json'));
+        fs.unlinkSync(path.join(directory, 'index.js'));
+        fs.unlinkSync(path.join(directory, 'setglobal.js'));
+        fs.rmdirSync(directory);
+    }
     test.ok(!fs.existsSync(directory));
     
-    test.expected(3);
+    test.expect(3);
     
     var result = runit.load('npmtest', 'setglobal', function(err, result) {
         test.equal(err, null);
