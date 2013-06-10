@@ -1,6 +1,6 @@
 # RunIt
 
-Run runit plugins
+Run runit modules
 
 ## Installation
 
@@ -25,6 +25,10 @@ cd RunIt
 npm install
 npm test
 ```
+
+## How to write a RunIt module
+
+TBD
 
 ## Samples
 
