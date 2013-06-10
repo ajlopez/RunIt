@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+"use strict";
+
+var runit = require('runit');
+
+var command = process.argv[2];
+var p = command.indexOf(':');
+var module = command.substring(0, p);
+var verb = command.substring(p + 1);
+
+runit.run(module, verb, process.argv.slice(3), function (err, result) {
+    if (err)
+        console.log(err);
+});

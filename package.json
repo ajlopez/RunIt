@@ -1,13 +1,16 @@
 { "name": "runit"
 , "description": "Run runit plugins"
 , "keywords": [ "plugin", "run", "engine" ]
-, "version": "0.0.1alpha"
+, "version": "0.0.1"
 , "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
 , "repository": { "type": "git", "url": "git://github.com/ajlopez/RunIt.git" }
 , "main": "./lib/runit.js"
 , "engines": { "node": ">= 0.6.0 && < 0.11.0" }
 , "scripts": {
     "test": "nodeunit test"
+  }
+, "bin": {
+    "runit": "./bin/runit"
   }
 , "dependencies": {
   }

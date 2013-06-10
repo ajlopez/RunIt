@@ -12,7 +12,10 @@ npm install runit -g
 
 ## Usage
 
-TBD
+Run
+```
+runit <module>:<verb> [args...]
+```
 
 ## Development
 
