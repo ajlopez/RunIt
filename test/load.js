@@ -53,6 +53,24 @@ exports['Load test directory runit module function'] = function (test) {
     test.done();
 };
 
+exports['Load test directory ajgenesis module'] = function (test) {
+    var setglobal = require(path.join(__dirname, 'ajgenesis', 'localtest', 'setglobal.js'));
+    var result = runit.load('localtest', 'setglobal', { directory: __dirname, namespace: 'ajgenesis' });
+
+    test.ok(result);
+    test.equal(result, setglobal);
+    test.done();
+};
+
+exports['Load test directory ajgenesis module function'] = function (test) {
+    var localtest = require(path.join(__dirname, 'ajgenesis', 'localtest'));
+    var result = runit.load('localtest', 'setrunit', { directory: __dirname, namespace: 'ajgenesis' });
+
+    test.ok(result);
+    test.equal(result, localtest.setrunit);
+    test.done();
+};
+
 exports['Load module'] = function (test) {
     var result = runit.load('npmtest', 'setglobal');
 
@@ -69,6 +87,16 @@ exports['Load module function'] = function (test) {
     var npmtest = require('runit-npmtest');    
     test.equal(result, npmtest.setrunit);
     test.done();
+};
+
+exports['Install and Load AjGenesis module'] = function (test) {
+    test.expect(2);
+    
+    var result = runit.load('hello', 'generate', { namespace: 'ajgenesisnode' }, function (err, result) {
+        test.equal(err, null);
+        test.ok(result);
+        test.done();
+    });
 };
 
 exports['Install from npm and Load module'] = function (test) {
@@ -105,8 +133,8 @@ exports['Install from npm and Load module function'] = function (test) {
     });
 };
 
-function removeModule(name) {
-    var directory = getModuleDirectory(name);
+function removeModule(name, namespace) {
+    var directory = getModuleDirectory(name, namespace);
     
     if (fs.existsSync(directory)) {
         fs.unlinkSync(path.join(directory, 'package.json'));
@@ -120,6 +148,7 @@ function removeModule(name) {
     });
 }
 
-function getModuleDirectory(name) {
-    return path.join(__dirname, '..', 'node_modules', 'runit-' + name);
+function getModuleDirectory(name, namespace) {
+    namespace = namespace || 'runit';
+    return path.join(__dirname, '..', 'node_modules', namespace + '-' + name);
 }
