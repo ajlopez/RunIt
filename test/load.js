@@ -10,7 +10,7 @@ exports['Load function defined'] = function (test) {
 };
 
 exports['Load local runit module file'] = function (test) {
-    var setglobal = require('../runit/test/setglobal.js');
+    var setglobal = require('../runit/modules/test/setglobal.js');
     var result = runit.load('test','setglobal');
 
     test.ok(result);
@@ -19,7 +19,7 @@ exports['Load local runit module file'] = function (test) {
 };
 
 exports['Load local runit module function'] = function (test) {
-    var setrunit = require('../runit/test/index.js').setrunit;
+    var setrunit = require('../runit/modules/test/index.js').setrunit;
     var result = runit.load('test', 'setrunit');
 
     test.ok(result);
@@ -36,7 +36,7 @@ exports['Load unknown module fails'] = function (test) {
 };
 
 exports['Load test directory runit module'] = function (test) {
-    var setglobal = require(path.join(__dirname, 'runit', 'localtest', 'setglobal.js'));
+    var setglobal = require(path.join(__dirname, 'runit', 'modules', 'localtest', 'setglobal.js'));
     var result = runit.load('localtest', 'setglobal', { directory: __dirname });
 
     test.ok(result);
@@ -45,7 +45,7 @@ exports['Load test directory runit module'] = function (test) {
 };
 
 exports['Load test directory runit module function'] = function (test) {
-    var localtest = require(path.join(__dirname, 'runit', 'localtest'));
+    var localtest = require(path.join(__dirname, 'runit', 'modules', 'localtest'));
     var result = runit.load('localtest', 'setrunit', { directory: __dirname });
 
     test.ok(result);
@@ -54,7 +54,7 @@ exports['Load test directory runit module function'] = function (test) {
 };
 
 exports['Load test directory ajgenesis module'] = function (test) {
-    var setglobal = require(path.join(__dirname, 'ajgenesis', 'localtest', 'setglobal.js'));
+    var setglobal = require(path.join(__dirname, 'ajgenesis', 'modules', 'localtest', 'setglobal.js'));
     var result = runit.load('localtest', 'setglobal', { directory: __dirname, namespace: 'ajgenesis' });
 
     test.ok(result);
@@ -63,7 +63,7 @@ exports['Load test directory ajgenesis module'] = function (test) {
 };
 
 exports['Load test directory ajgenesis module function'] = function (test) {
-    var localtest = require(path.join(__dirname, 'ajgenesis', 'localtest'));
+    var localtest = require(path.join(__dirname, 'ajgenesis', 'modules', 'localtest'));
     var result = runit.load('localtest', 'setrunit', { directory: __dirname, namespace: 'ajgenesis' });
 
     test.ok(result);
