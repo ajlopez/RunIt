@@ -11,24 +11,33 @@ exports['Load function defined'] = function (test) {
 
 exports['Load local runit module file'] = function (test) {
     var setglobal = require('../runit/modules/test/setglobal.js');
-    var result = runit.load('test','setglobal');
-
-    test.ok(result);
-    test.equal(result, setglobal);
-    test.done();
+    
+    test.expect(3);
+    
+    runit.load('test','setglobal', function (err, rmodule) {
+        test.equal(err, null);
+        test.ok(rmodule);
+        test.equal(rmodule, setglobal);
+        test.done();
+    });
 };
 
 exports['Load local runit module function'] = function (test) {
     var setrunit = require('../runit/modules/test/index.js').setrunit;
-    var result = runit.load('test', 'setrunit');
-
-    test.ok(result);
-    test.equal(result, setrunit);
-    test.done();
+    
+    test.expect(3);
+    
+    runit.load('test', 'setrunit', function (err, rmodule) {
+        test.equal(err, null);
+        test.ok(rmodule);
+        test.equal(rmodule, setrunit);
+        test.done();
+    });
 };
 
 exports['Load unknown module fails'] = function (test) {
     test.expect(1);
+
     runit.load('unknown', 'unknown', function (err, result) {
         test.ok(err);
         test.done();
@@ -37,62 +46,84 @@ exports['Load unknown module fails'] = function (test) {
 
 exports['Load test directory runit module'] = function (test) {
     var setglobal = require(path.join(__dirname, 'runit', 'modules', 'localtest', 'setglobal.js'));
-    var result = runit.load('localtest', 'setglobal', { directory: __dirname });
-
-    test.ok(result);
-    test.equal(result, setglobal);
-    test.done();
+    
+    test.expect(3);
+    
+    runit.load('localtest', 'setglobal', { directory: __dirname }, function (err, rmodule) {
+        test.equal(err, null);
+        test.ok(rmodule);
+        test.equal(rmodule, setglobal);
+        test.done();
+    });
 };
 
 exports['Load test directory runit module function'] = function (test) {
     var localtest = require(path.join(__dirname, 'runit', 'modules', 'localtest'));
-    var result = runit.load('localtest', 'setrunit', { directory: __dirname });
-
-    test.ok(result);
-    test.equal(result, localtest.setrunit);
-    test.done();
+    
+    test.expect(3);
+    
+    runit.load('localtest', 'setrunit', { directory: __dirname }, function (err, rmodule) {
+        test.equal(err, null);
+        test.ok(rmodule);
+        test.equal(rmodule, localtest.setrunit);
+        test.done();
+    });
 };
 
 exports['Load test directory ajgenesis module'] = function (test) {
     var setglobal = require(path.join(__dirname, 'ajgenesis', 'modules', 'localtest', 'setglobal.js'));
-    var result = runit.load('localtest', 'setglobal', { directory: __dirname, namespace: 'ajgenesis' });
-
-    test.ok(result);
-    test.equal(result, setglobal);
-    test.done();
+    
+    test.expect(3);
+    
+    runit.load('localtest', 'setglobal', { directory: __dirname, namespace: 'ajgenesis' }, function (err, rmodule) {
+        test.equal(err, null);
+        test.ok(rmodule);
+        test.equal(rmodule, setglobal);
+        test.done();
+    });
 };
 
 exports['Load test directory ajgenesis module function'] = function (test) {
     var localtest = require(path.join(__dirname, 'ajgenesis', 'modules', 'localtest'));
-    var result = runit.load('localtest', 'setrunit', { directory: __dirname, namespace: 'ajgenesis' });
-
-    test.ok(result);
-    test.equal(result, localtest.setrunit);
-    test.done();
+    
+    test.expect(3);
+    
+    runit.load('localtest', 'setrunit', { directory: __dirname, namespace: 'ajgenesis' }, function (err, rmodule) {
+        test.equal(err, null);
+        test.ok(rmodule);
+        test.equal(rmodule, localtest.setrunit);
+        test.done();
+    });
 };
 
 exports['Load module'] = function (test) {
-    var result = runit.load('npmtest', 'setglobal');
+    test.expect(3);
 
-    test.ok(result);
-    var setglobal = require('runit-npmtest/setglobal');    
-    test.equal(result, setglobal);
-    test.done();
+    runit.load('npmtest', 'setglobal', function (err, rmodule) {
+        test.equal(err, null);
+        test.ok(rmodule);
+        var setglobal = require('runit-npmtest/setglobal');    
+        test.equal(rmodule, setglobal);
+        test.done();
+    });    
 };
 
 exports['Load module function'] = function (test) {
-    var result = runit.load('npmtest', 'setrunit');
-
-    test.ok(result);
-    var npmtest = require('runit-npmtest');    
-    test.equal(result, npmtest.setrunit);
-    test.done();
+    test.expect(3);
+    
+    runit.load('npmtest', 'setrunit', function (err, rmodule) {
+        test.equal(err, null);
+        test.ok(rmodule);
+        var npmtest = require('runit-npmtest');    
+        test.equal(rmodule, npmtest.setrunit);
+        test.done();
+    });
 };
 
 exports['Install and Load AjGenesis module'] = function (test) {
     test.expect(2);
     
-    var result = runit.load('hello', 'generate', { namespace: 'ajgenesisnode' }, function (err, result) {
+    runit.load('hello', 'generate', { namespace: 'ajgenesisnode' }, function (err, result) {
         test.equal(err, null);
         test.ok(result);
         test.done();
