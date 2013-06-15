@@ -38,6 +38,11 @@ TBD
 
 Evolution of [AjGenesis](https://github.com/ajlopez/AjGenesisNode) plugins
 
+## Versions
+
+0.0.1: Published
+0.0.2: Published. Call run and load with callback
+
 ## Contribution
 
 Feel free to [file issues](https://github.com/ajlopez/RunIt) and submit
